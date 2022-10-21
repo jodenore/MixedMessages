@@ -1,3 +1,7 @@
+const getRandomArray = (arr) => {
+  let randArr = arr[Math.floor(Math.random() * arr.length)];
+  return randArr;
+};
 const draftScout = [
   "Burhan Ellwood",
   "Liam Pemberton",
@@ -31,14 +35,12 @@ const draftScout = [
   "Herbie Colon",
 ];
 
-let randomScout = draftScout[Math.floor(Math.random() * draftScout.length)];
-
 const playerLocation = [
   "Duke",
   "Murray State",
-  "Virginia ",
+  "Virginia",
   "Vanderbilt",
-  "North Carolina ",
+  "North Carolina",
   "Texas Tech",
   "Texas",
   "Limoges CSP France",
@@ -46,7 +48,7 @@ const playerLocation = [
   "Kentucky",
   "Indiana ",
   "USC",
-  "Georgia ",
+  "Georgia",
   "Oregon",
   "Villanova",
   "Iowa",
@@ -55,19 +57,13 @@ const playerLocation = [
   "Memphis",
 ];
 
-let randomLocation =
-  playerLocation[Math.floor(Math.random() * playerLocation.length)];
-
 const scoutSayings = ["says", "reports", "thinks", "expresses", "prediction"];
-
-let randomSayings =
-  scoutSayings[Math.floor(Math.random() * scoutSayings.length)];
 
 const draftProspect = {
   _playerName: "",
   _currentLocation: "",
   _age: "",
-  _ppg: 16,
+  _ppg: 0,
   _skillSets: [
     "Versatile scorer",
     "Lethal spot-up shooter",
@@ -114,12 +110,34 @@ const draftProspect = {
 
   getScoutOpinion() {
     let scoutOpinion;
-    switch (this._ppg) {
-      case 16:
+    switch (true) {
+      case this._ppg >= 19:
         scoutOpinion =
-          "which I think is very good this shows his ceiling for the league could be very high";
+          "which shows how gifted at scoring and has the ceiling to be one of the league's best superstars";
+        break;
+      case this._ppg <= 18 && this._ppg > 15:
+        scoutOpinion =
+          "which shows his ceiling could be an consistent starter for teams in the league";
+        break;
+      case this._ppg <= 15 && this._ppg > 13:
+        scoutOpinion =
+          "meaning he can create shots and score while being an sixth man or bench player";
+        break;
+      case this._ppg <= 13 && this._ppg > 10:
+        scoutOpinion =
+          "to me personally shows he can score points when needed but not on a consistent basis";
+        break;
+      case this._ppg <= 10 && this._ppg > 8:
+        scoutOpinion =
+          "which proves to me that he has the talents to score but isn't very confident at doing that";
+        break;
+      case this._ppg <= 8 && this._ppg > 5:
+        scoutOpinion =
+          "This is very bad due to the fact he showed signs of consistent signs of scoring in Div 1";
         break;
 
+      case this._ppg <= 5 && this._ppg >= 0:
+        scoutOpinion = `${this._playerName} clearly struggled at ${this._currentLocation} this season. Very raw prospect`;
       default:
         break;
     }
@@ -150,7 +168,39 @@ const draftProspect = {
 
   set location(currentLocation) {
     if (typeof currentLocation === "string") {
-      this._currentLocation = currentLocation;
+      this._currentLocation = currentLocation.toUpperCase;
+    } else {
+      return false;
+    }
+  },
+
+  get eligibleAge() {
+    if (typeof draftAge === "string") {
+      return this._age;
+    } else {
+      return false;
+    }
+  },
+
+  set eligibleAge(draftAge) {
+    if (typeof draftAge === "string") {
+      this._age = draftAge;
+    } else {
+      return false;
+    }
+  },
+
+  get pointsPerGame() {
+    if (typeof ppg === "number") {
+      return this._ppg;
+    } else {
+      return false;
+    }
+  },
+
+  set pointsPerGame(ppg) {
+    if (typeof ppg === "number") {
+      this._ppg = ppg;
     } else {
       return false;
     }
@@ -158,9 +208,9 @@ const draftProspect = {
 
   generateScoutReport() {
     console.log(
-      `${randomScout} ${randomSayings}: ${
+      `${getRandomArray(draftScout)} ${getRandomArray(scoutSayings)}: ${
         this._playerName
-      } is a ${this.getSkillSet()}. He Averaged ${this._ppg} at ${
+      } is a ${this.getSkillSet()}. He Averaged ${this._ppg} points at ${
         this._currentLocation
       } this season, ${this.getScoutOpinion()}.
      `
@@ -168,10 +218,20 @@ const draftProspect = {
   },
 
   willMakeNba() {
-    let nbaReadyPer = "";
-    if (this._ppg >= 15.5) {
-      nbaReadyPer = "Lottery Pick";
+    let nbaReadyPer = "Draft Projection: ";
+    switch (true) {
+      case this._ppg >= 19:
+        nbaReadyPer += "Top 3 Pick";
+        break;
+      case this._ppg < 19 && this._ppg >= 15:
+        nbaReadyPer += "Lottery Pick";
+        break;
+      default:
+        break;
     }
+    // if (this._ppg >= 15.5) {
+    //   nbaReadyPer = "Lottery Pick";
+    // }
     return nbaReadyPer;
   },
 };
@@ -189,7 +249,9 @@ const generatePointsPerGame = (min, max) => {
 };
 
 draftProspect.name = "Jalen Duren";
-draftProspect._currentLocation = randomLocation;
+draftProspect._currentLocation = getRandomArray(playerLocation);
+draftProspect._age = generateEligibleAge(18, 23);
+draftProspect._ppg = generatePointsPerGame(0, 25);
 draftProspect.generateScoutReport();
 console.log(draftProspect.willMakeNba());
 console.log(generateEligibleAge(18, 23));
