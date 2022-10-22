@@ -268,7 +268,7 @@ const generatePointsPerGame = (min, max) => {
 draftProspect.name = "Jalen Duren";
 draftProspect._currentLocation = getRandomArray(playerLocation);
 draftProspect._age = generateEligibleAge(18, 23);
-draftProspect._ppg = 19.9;
+draftProspect._ppg = generatePointsPerGame(0, 25);
 draftProspect.generateScoutReport();
 console.log(draftProspect.willMakeNba());
 console.log(generateEligibleAge(18, 23));
