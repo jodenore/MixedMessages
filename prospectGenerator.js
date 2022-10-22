@@ -46,7 +46,7 @@ const playerLocation = [
   "Limoges CSP France",
   "Gonzaga",
   "Kentucky",
-  "Indiana ",
+  "Indiana",
   "USC",
   "Georgia",
   "Oregon",
@@ -111,11 +111,11 @@ const draftProspect = {
   getScoutOpinion() {
     let scoutOpinion;
     switch (true) {
-      case this._ppg >= 19:
+      case this._ppg > 19:
         scoutOpinion =
           "which shows how gifted at scoring and has the ceiling to be one of the league's best superstars";
         break;
-      case this._ppg <= 18 && this._ppg > 15:
+      case this._ppg <= 19 && this._ppg > 15:
         scoutOpinion =
           "which shows his ceiling could be an consistent starter for teams in the league";
         break;
@@ -207,31 +207,48 @@ const draftProspect = {
   },
 
   generateScoutReport() {
-    console.log(
-      `${getRandomArray(draftScout)} ${getRandomArray(scoutSayings)}: ${
-        this._playerName
-      } is a ${this.getSkillSet()}. He Averaged ${this._ppg} points at ${
-        this._currentLocation
-      } this season, ${this.getScoutOpinion()}.
+    if (this._playerName && this._age && this._ppg) {
+      console.log(
+        `${getRandomArray(draftScout)} ${getRandomArray(scoutSayings)}: ${
+          this._playerName
+        } is a ${this.getSkillSet()}. He is only ${
+          this._age
+        } years old and tends to use his ${this.getSecondSkill()} a lot in games. He Averaged ${
+          this._ppg
+        } points at ${
+          this._currentLocation
+        } this season, ${this.getScoutOpinion()}.
      `
-    );
+      );
+    } else {
+      console.log("Missing information on prospect");
+    }
   },
 
   willMakeNba() {
     let nbaReadyPer = "Draft Projection: ";
     switch (true) {
-      case this._ppg >= 19:
-        nbaReadyPer += "Top 3 Pick";
-        break;
-      case this._ppg < 19 && this._ppg >= 15:
+      case this._ppg > 20:
         nbaReadyPer += "Lottery Pick";
         break;
+      case this._ppg < 20 && this._ppg >= 15:
+        nbaReadyPer += "Top 10 Pick";
+        break;
+      case this._ppg < 15 && this._ppg >= 9:
+        nbaReadyPer += "Late 1st Round Pick";
+        break;
+      case this._ppg < 8 && this._ppg >= 6:
+        nbaReadyPer += "2nd Round Pick";
+        break;
+
+      case this._ppg < 5 && this._ppg >= 0:
+        nbaReadyPer += "Undrafted / G-League";
+        break;
       default:
+        nbaReadyPer += "Out Of League";
         break;
     }
-    // if (this._ppg >= 15.5) {
-    //   nbaReadyPer = "Lottery Pick";
-    // }
+
     return nbaReadyPer;
   },
 };
@@ -251,7 +268,7 @@ const generatePointsPerGame = (min, max) => {
 draftProspect.name = "Jalen Duren";
 draftProspect._currentLocation = getRandomArray(playerLocation);
 draftProspect._age = generateEligibleAge(18, 23);
-draftProspect._ppg = generatePointsPerGame(0, 25);
+draftProspect._ppg = 19.9;
 draftProspect.generateScoutReport();
 console.log(draftProspect.willMakeNba());
 console.log(generateEligibleAge(18, 23));
