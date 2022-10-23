@@ -1,7 +1,9 @@
+/// Gives you a random element from inputted array
 const getRandomArray = (arr) => {
   let randArr = arr[Math.floor(Math.random() * arr.length)];
   return randArr;
 };
+//List of scouts reporting on prospects
 const draftScout = [
   "Burhan Ellwood",
   "Liam Pemberton",
@@ -34,7 +36,7 @@ const draftScout = [
   "Peyton Mohammed",
   "Herbie Colon",
 ];
-
+/// Teams and locations prospects played for before the draft
 const playerLocation = [
   "Duke",
   "Murray State",
@@ -56,9 +58,29 @@ const playerLocation = [
   "New Zealand",
   "Memphis",
 ];
+/// Scout Before speech
+const scoutSayings = [
+  "says",
+  "reports",
+  "thinks",
+  "expresses",
+  "prediction",
+  "states",
+];
 
-const scoutSayings = ["says", "reports", "thinks", "expresses", "prediction"];
-
+const scoutExpression = [
+  "is a",
+  "shows that he inherits the skill of being a",
+  "has shown in his career that he is a",
+  "projects as a",
+  "Flashes being a",
+  "Shows being in the NBA as a",
+  "Strong indicators being a",
+  "Has high potential at playing in a role being a",
+  "shown to consistently be a",
+  "main archetype is being a",
+];
+// Draft prospect object
 const draftProspect = {
   _playerName: "",
   _currentLocation: "",
@@ -88,8 +110,9 @@ const draftProspect = {
     "Athleticism",
     "Rebounding",
     "Playmaking",
+    "Physicality",
   ],
-
+  //Getters and Setters to use below
   getSkillSet() {
     const randomSkill = this._skillSets[
       Math.floor(Math.random() * this._skillSets.length)
@@ -175,7 +198,7 @@ const draftProspect = {
   },
 
   get eligibleAge() {
-    if (typeof draftAge === "string") {
+    if (typeof draftAge === "number") {
       return this._age;
     } else {
       return false;
@@ -183,7 +206,7 @@ const draftProspect = {
   },
 
   set eligibleAge(draftAge) {
-    if (typeof draftAge === "string") {
+    if (typeof draftAge === "number") {
       this._age = draftAge;
     } else {
       return false;
@@ -205,13 +228,15 @@ const draftProspect = {
       return false;
     }
   },
-
+  /// Main part of the program, generating the report
   generateScoutReport() {
     if (this._playerName && this._age && this._ppg) {
       console.log(
         `${getRandomArray(draftScout)} ${getRandomArray(scoutSayings)}: ${
           this._playerName
-        } is a ${this.getSkillSet()}. He is only ${
+        } ${getRandomArray(
+          scoutExpression
+        )} ${this.getSkillSet()}. He is only ${
           this._age
         } years old and tends to use his ${this.getSecondSkill()} a lot in games. He Averaged ${
           this._ppg
@@ -224,7 +249,7 @@ const draftProspect = {
       console.log("Missing information on prospect");
     }
   },
-
+  //Gives the Draft projection
   willMakeNba() {
     let nbaReadyPer = "Draft Projection: ";
     switch (true) {
@@ -252,23 +277,23 @@ const draftProspect = {
     return nbaReadyPer;
   },
 };
-
+/// Generates an age range for the prospects
 const generateEligibleAge = (minA, maxA) => {
   minA = Math.ceil(minA);
   maxA = Math.floor(maxA);
   return Math.floor(Math.random() * (maxA - minA + 1)) + minA;
 };
-
+//Generates a points per game avg between two numbers
 const generatePointsPerGame = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max) * 10;
   return Math.round(Math.random() * (max - min + 1 * 10) + min) / 10;
 };
-
+//Sets the name of prospect
 draftProspect.name = "Jalen Duren";
+
 draftProspect._currentLocation = getRandomArray(playerLocation);
 draftProspect._age = generateEligibleAge(18, 23);
 draftProspect._ppg = generatePointsPerGame(0, 25);
 draftProspect.generateScoutReport();
 console.log(draftProspect.willMakeNba());
-console.log(generateEligibleAge(18, 23));
