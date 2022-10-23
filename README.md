@@ -6,6 +6,20 @@ For this project, you will build a message generator program. Every time a user 
 
 _The Prospect Generator gives you a different scout report from different scouts with randomized skill sets and more!_
 
+### What changes in every report?
+
+- Name of Scout
+- Where the player is from/team
+- Scout Lingo/Saying
+
+* Expression of Scout
+
+* Primary Skill Set
+* Secondary Skill
+* Opinion on player based on `draftProspect._ppg`
+* Age of player and Points per game average of player
+* Draft Projection based on `draftProspect._ppg`
+
 ### Instructions
 
 1. **at `draftProspect.name` set any name to the draftProspect.**
