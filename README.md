@@ -14,3 +14,5 @@ _The Prospect Generator gives you a different scout report from different scouts
 ### Example
 
 Console should log: `Jevan Blankenship states: Naz Reid main archetype is being a Consistent pick-and-roll defender. He is only 21 years old and tends to use his Athleticism a lot in games. He Averaged 16 points at Iowa this season, which shows his ceiling could be an consistent starter for teams in the league.`
+
+Also: `Draft Projection: Top 10 Pick`
