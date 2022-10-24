@@ -67,7 +67,7 @@ const scoutSayings = [
   "prediction",
   "states",
 ];
-
+//list of compound sentences
 const scoutExpression = [
   "is a",
   "shows that he inherits the skill of being a",
@@ -75,7 +75,7 @@ const scoutExpression = [
   "projects as a",
   "Flashes being a",
   "Shows being in the NBA as a",
-  "Strong indicators being a",
+  "Has strong indicators being a",
   "Has high potential at playing in a role being a",
   "shown to consistently be a",
   "main archetype is being a",
@@ -191,7 +191,7 @@ const draftProspect = {
 
   set location(currentLocation) {
     if (typeof currentLocation === "string") {
-      this._currentLocation = currentLocation.toUpperCase;
+      this._currentLocation = currentLocation.toUpperCase();
     } else {
       return false;
     }
@@ -249,32 +249,36 @@ const draftProspect = {
       console.log("Missing information on prospect");
     }
   },
-  //Gives the Draft projection
+  //Bonus: Gives the Draft projection by using the _ppg value
   willMakeNba() {
-    let nbaReadyPer = "Draft Projection: ";
-    switch (true) {
-      case this._ppg > 20:
-        nbaReadyPer += "Lottery Pick";
-        break;
-      case this._ppg < 20 && this._ppg >= 15:
-        nbaReadyPer += "Top 10 Pick";
-        break;
-      case this._ppg < 15 && this._ppg >= 9:
-        nbaReadyPer += "Late 1st Round Pick";
-        break;
-      case this._ppg < 8 && this._ppg >= 6:
-        nbaReadyPer += "2nd Round Pick";
-        break;
+    if (this._age && this._ppg && this._currentLocation) {
+      let nbaReadyPer = "Draft Projection: ";
+      switch (true) {
+        case this._ppg > 20:
+          nbaReadyPer += "Lottery Pick";
+          break;
+        case this._ppg < 20 && this._ppg >= 15:
+          nbaReadyPer += "Top 10 Pick";
+          break;
+        case this._ppg < 15 && this._ppg >= 9:
+          nbaReadyPer += "Late 1st Round Pick";
+          break;
+        case this._ppg < 8 && this._ppg >= 6:
+          nbaReadyPer += "2nd Round Pick";
+          break;
 
-      case this._ppg < 5 && this._ppg >= 0:
-        nbaReadyPer += "Undrafted / G-League";
-        break;
-      default:
-        nbaReadyPer += "Out Of League";
-        break;
+        case this._ppg < 5 && this._ppg >= 0:
+          nbaReadyPer += "Undrafted / G-League";
+          break;
+        default:
+          nbaReadyPer += "Out Of League";
+          break;
+      }
+
+      return nbaReadyPer;
+    } else {
+      return "No information";
     }
-
-    return nbaReadyPer;
   },
 };
 /// Generates an age range for the prospects
@@ -289,11 +293,11 @@ const generatePointsPerGame = (min, max) => {
   max = Math.floor(max) * 10;
   return Math.round(Math.random() * (max - min + 1 * 10) + min) / 10;
 };
-//Sets the name of prospect
-draftProspect.name = "Jalen Duren";
 
-draftProspect._currentLocation = getRandomArray(playerLocation);
-draftProspect._age = generateEligibleAge(18, 23);
-draftProspect._ppg = generatePointsPerGame(0, 25);
+//Sets the name of prospect
+draftProspect.name = "Naz Reid";
+draftProspect.location = getRandomArray(playerLocation);
+draftProspect.eligibleAge = generateEligibleAge(18, 23);
+draftProspect.pointsPerGame = generatePointsPerGame(0, 25);
 draftProspect.generateScoutReport();
 console.log(draftProspect.willMakeNba());
